@@ -330,12 +330,9 @@
     }
 
     function enterSite() {
-      // Hide landing page and show nav tabs
+      // Hide landing page and show view page
       document.getElementById('landing').classList.remove('active');
-      document.getElementById('navTabs').style.display = 'flex';
-      
-      // Show view page
-      showPage('view');
+      document.getElementById('view').classList.add('active');
     }
 
     function showPage(pageId) {
