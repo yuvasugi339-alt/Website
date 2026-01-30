@@ -315,21 +315,35 @@
 
   <script>
     let programs = {};
+    const GITHUB_USERNAME = 'yuvasugi339-alt';
+    const GITHUB_REPO = 'Website';
+    const PROGRAMS_FOLDER = 'programs';
 
-    // Load programs from programs.json file in repo
+    // Load programs from GitHub folder using GitHub API
     function loadPrograms() {
-      fetch('programs.json')
+      const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${PROGRAMS_FOLDER}`;
+      
+      fetch(apiUrl)
         .then(response => response.json())
-        .then(data => {
-          // Convert array to object format
-          data.forEach(prog => {
-            programs[prog.id] = {
-              name: prog.name,
-              code: prog.code
-            };
+        .then(files => {
+          // Filter only .java files
+          const javaFiles = files.filter(file => file.name.endsWith('.java'));
+          
+          // Load each Java file
+          javaFiles.forEach(file => {
+            fetch(file.download_url)
+              .then(response => response.text())
+              .then(code => {
+                const id = file.name.replace('.java', '').toLowerCase();
+                const name = file.name.replace('.java', '');
+                programs[id] = {
+                  name: name,
+                  code: code
+                };
+              });
           });
         })
-        .catch(error => console.log('Programs file not found or error loading:', error));
+        .catch(error => console.log('Error loading programs from GitHub:', error));
     }
 
     function enterSite() {
