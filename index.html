@@ -290,6 +290,9 @@
     <!-- Page 1: View Programs -->
     <div id="view" class="page">
       <div class="content">
+        <div class="programs-grid" id="programsGrid" style="margin-bottom: 30px;">
+          <div class="empty-state">Loading programs...</div>
+        </div>
         <div class="code-display empty" id="codeDisplay">
           <span>Select a program to view the code</span>
         </div>
@@ -329,6 +332,8 @@
           // Load all files (any programming language)
           const codeFiles = files.filter(file => file.type === 'file');
           
+          let loadedCount = 0;
+          
           // Load each file
           codeFiles.forEach(file => {
             fetch(file.download_url)
@@ -340,10 +345,40 @@
                   name: name,
                   code: code
                 };
+                
+                loadedCount++;
+                // Render when all programs are loaded
+                if (loadedCount === codeFiles.length) {
+                  renderPrograms();
+                }
               });
           });
+          
+          // If no files, render empty
+          if (codeFiles.length === 0) {
+            renderPrograms();
+          }
         })
-        .catch(error => console.log('Error loading programs from GitHub:', error));
+        .catch(error => {
+          console.log('Error loading programs from GitHub:', error);
+          renderPrograms();
+        });
+    }
+    
+    function renderPrograms() {
+      const programsGrid = document.getElementById('programsGrid');
+      
+      if (Object.keys(programs).length === 0) {
+        programsGrid.innerHTML = '<div class="empty-state">No programs found</div>';
+        return;
+      }
+      
+      programsGrid.innerHTML = Object.entries(programs)
+        .map(([id, prog]) => `
+          <button class="program-card" onclick="showCode('${id}')" title="${prog.name}">
+            ${escapeHtml(prog.name)}
+          </button>
+        `).join('');
     }
 
     function enterSite() {
@@ -399,7 +434,7 @@
         return;
       }
 
-      alert('To add programs permanently:\n\n1. Edit programs.json in your repo\n2. Add your program in this format:\n{\n  "id": "unique_id",\n  "name": "Program Name",\n  "code": "your code here"\n}\n3. Push to GitHub\n\nOr share your code and I can add it for you!');
+      alert('To add programs:\n\n1. Add code files to the "programs" folder in your GitHub repo\n2. Supported: .java, .py, .js, .cpp, .go, .rb, .cs, etc.\n3. Push to GitHub\n4. Your programs will appear here automatically!');
       
       // Clear inputs
       nameInput.value = '';
@@ -407,20 +442,15 @@
       nameInput.focus();
     }
 
-    function renderPrograms() {
-      const programsGrid = document.getElementById('programsGrid');
-
-      if (Object.keys(programs).length === 0) {
-        programsGrid.innerHTML = '<div class="empty-state">No programs added yet. Go to "Add Program" to create one!</div>';
-        return;
-      }
-
-      programsGrid.innerHTML = Object.entries(programs)
-        .map(([id, prog]) => `
-          <button class="program-card" onclick="showCode('${id}')" title="${prog.name}">
-            ${escapeHtml(prog.name)}
-          </button>
-        `).join('');
+    function escapeHtml(text) {
+      const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return text.replace(/[&<>"']/g, m => map[m]);
     }
 
     function showCode(id) {
@@ -455,17 +485,6 @@
           copyBtn.classList.remove('copied');
         }, 2000);
       });
-    }
-
-    function escapeHtml(text) {
-      const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;'
-      };
-      return text.replace(/[&<>"']/g, m => map[m]);
     }
 
     // Load programs when page loads
