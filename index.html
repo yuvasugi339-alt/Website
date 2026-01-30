@@ -316,17 +316,20 @@
   <script>
     let programs = {};
 
-    // Load programs from localStorage on page load
+    // Load programs from programs.json file in repo
     function loadPrograms() {
-      const saved = localStorage.getItem('javaProgramsData');
-      if (saved) {
-        programs = JSON.parse(saved);
-        renderPrograms();
-      }
-    }
-
-    function savePrograms() {
-      localStorage.setItem('javaProgramsData', JSON.stringify(programs));
+      fetch('programs.json')
+        .then(response => response.json())
+        .then(data => {
+          // Convert array to object format
+          data.forEach(prog => {
+            programs[prog.id] = {
+              name: prog.name,
+              code: prog.code
+            };
+          });
+        })
+        .catch(error => console.log('Programs file not found or error loading:', error));
     }
 
     function enterSite() {
@@ -382,24 +385,12 @@
         return;
       }
 
-      // Create a unique ID based on name
-      const id = name.toLowerCase().replace(/\s+/g, '_') + '_' + Date.now();
-
-      programs[id] = {
-        name: name,
-        code: code
-      };
-
-      savePrograms();
-      renderPrograms();
-
+      alert('To add programs permanently:\n\n1. Edit programs.json in your repo\n2. Add your program in this format:\n{\n  "id": "unique_id",\n  "name": "Program Name",\n  "code": "your code here"\n}\n3. Push to GitHub\n\nOr share your code and I can add it for you!');
+      
       // Clear inputs
       nameInput.value = '';
       codeInput.value = '';
       nameInput.focus();
-
-      // Show success message
-      alert('Program added successfully!');
     }
 
     function renderPrograms() {
