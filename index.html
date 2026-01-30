@@ -326,16 +326,16 @@
       fetch(apiUrl)
         .then(response => response.json())
         .then(files => {
-          // Filter only .java files
-          const javaFiles = files.filter(file => file.name.endsWith('.java'));
+          // Load all files (any programming language)
+          const codeFiles = files.filter(file => file.type === 'file');
           
-          // Load each Java file
-          javaFiles.forEach(file => {
+          // Load each file
+          codeFiles.forEach(file => {
             fetch(file.download_url)
               .then(response => response.text())
               .then(code => {
-                const id = file.name.replace('.java', '').toLowerCase();
-                const name = file.name.replace('.java', '');
+                const id = file.name.toLowerCase().replace(/\./g, '_');
+                const name = file.name;
                 programs[id] = {
                   name: name,
                   code: code
