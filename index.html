@@ -377,13 +377,21 @@
     
     function renderPrograms() {
       const programsGrid = document.getElementById('programsGrid');
-      
-      if (Object.keys(programs).length === 0) {
+      const entries = Object.entries(programs);
+
+      if (entries.length === 0) {
         programsGrid.innerHTML = '<div class="empty-state">No programs found</div>';
         return;
       }
-      
-      programsGrid.innerHTML = Object.entries(programs)
+
+      // Sort entries alphabetically by program name (case-insensitive)
+      entries.sort((a, b) => {
+        const nameA = (a[1].name || '').toLowerCase();
+        const nameB = (b[1].name || '').toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+
+      programsGrid.innerHTML = entries
         .map(([id, prog]) => `
           <button class="program-card" onclick="showCode('${id}')" title="${prog.name}">
             ${escapeHtml(prog.name)}
