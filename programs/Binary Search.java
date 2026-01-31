@@ -31,14 +31,14 @@ class BinarySearch
             {
                 ub = p - 1;
             }
-            if (k == 1)
-            {
-                System.out.println("Element found at position " + (p + 1));
-            }
-            else
-            {
-                System.out.println("Element not found");
-            }
+        }
+        if(k == 1)
+        {
+            System.out.println("Element found at position " + (p + 1));
+        }
+        else
+        {
+            System.out.println("Element not found");
         }
         sc.close();
     }
