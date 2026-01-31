@@ -13,7 +13,7 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #000000;
       min-height: 100vh;
       padding: 20px;
     }
@@ -24,15 +24,16 @@
     }
 
     .header {
-      background: white;
+      background: #1a1a1a;
       border-radius: 10px;
       padding: 25px;
       margin-bottom: 30px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
+      border: 2px solid #00ff88;
     }
 
     h1 {
-      color: #333;
+      color: #00ff88;
       text-align: center;
       margin-bottom: 20px;
       font-size: 28px;
@@ -42,15 +43,15 @@
       display: flex;
       gap: 10px;
       justify-content: center;
-      border-top: 2px solid #ddd;
+      border-top: 2px solid #00ff88;
       padding-top: 20px;
     }
 
     .nav-btn {
       padding: 12px 30px;
-      border: 2px solid #667eea;
-      background: white;
-      color: #667eea;
+      border: 2px solid #00ff88;
+      background: transparent;
+      color: #00ff88;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
@@ -60,15 +61,17 @@
     }
 
     .nav-btn:hover {
-      background: #667eea;
-      color: white;
+      background: #00ff88;
+      color: #000000;
       transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
     }
 
     .nav-btn.active {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border-color: #764ba2;
+      background: #00ff88;
+      color: #000000;
+      border-color: #00ff88;
+      box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
     }
 
     .page {
@@ -80,10 +83,11 @@
     }
 
     .content {
-      background: white;
+      background: #1a1a1a;
       border-radius: 10px;
       padding: 30px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
+      border: 2px solid #00ff88;
     }
 
     /* Page 1 - View Programs */
@@ -96,9 +100,9 @@
 
     .program-card {
       padding: 15px;
-      border: 2px solid #667eea;
-      background: white;
-      color: #667eea;
+      border: 2px solid #00ff88;
+      background: #0d0d0d;
+      color: #00ff88;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
@@ -113,21 +117,22 @@
     }
 
     .program-card:hover {
-      background: #667eea;
-      color: white;
+      background: #00ff88;
+      color: #000000;
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.6);
     }
 
     .program-card.active {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      color: white;
-      border-color: #f5576c;
+      background: #00ff88;
+      color: #000000;
+      border-color: #00ff88;
+      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.6);
     }
 
     .code-display {
-      background: #f5f5f5;
-      border: 2px solid #ddd;
+      background: #0d0d0d;
+      border: 2px solid #00ff88;
       border-radius: 6px;
       padding: 20px;
       min-height: 200px;
@@ -138,14 +143,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #999;
+      color: #00ff88;
       font-style: italic;
     }
 
     code {
       display: block;
       font-family: 'Courier New', monospace;
-      color: #333;
+      color: #00ff88;
       white-space: pre-wrap;
       word-break: break-all;
       line-height: 1.6;
@@ -158,9 +163,9 @@
       right: 10px;
       padding: 8px 12px;
       font-size: 12px;
-      background: #667eea;
+      background: #00ff88;
       border: none;
-      color: white;
+      color: #000000;
       border-radius: 4px;
       cursor: pointer;
       font-weight: bold;
@@ -168,7 +173,8 @@
     }
 
     .copy-btn:hover {
-      background: #764ba2;
+      background: #00cc6a;
+      box-shadow: 0 3px 10px rgba(0, 255, 136, 0.4);
     }
 
     .copy-btn.copied {
@@ -182,7 +188,7 @@
 
     label {
       display: block;
-      color: #555;
+      color: #00ff88;
       margin-bottom: 8px;
       font-weight: 600;
       font-size: 14px;
@@ -192,18 +198,21 @@
     textarea {
       width: 100%;
       padding: 12px;
-      border: 2px solid #ddd;
+      border: 2px solid #00ff88;
       border-radius: 6px;
       font-family: 'Courier New', monospace;
       font-size: 13px;
       resize: vertical;
       transition: border-color 0.3s;
+      background: #0d0d0d;
+      color: #00ff88;
     }
 
     input[type="text"]:focus,
     textarea:focus {
       outline: none;
-      border-color: #667eea;
+      border-color: #00ff88;
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
     }
 
     textarea {
@@ -213,8 +222,8 @@
     .btn-add {
       width: 100%;
       padding: 14px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: #00ff88;
+      color: #000000;
       border: none;
       border-radius: 6px;
       font-weight: bold;
@@ -227,12 +236,13 @@
 
     .btn-add:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+      background: #00cc6a;
     }
 
     .empty-state {
       text-align: center;
-      color: #999;
+      color: #00ff88;
       font-style: italic;
       padding: 40px 20px;
     }
@@ -275,8 +285,8 @@
     <div id="landing" class="page active">
       <div class="content">
         <div style="text-align: center; padding: 60px 40px;">
-          <h2 style="color: #333; font-size: 32px; margin-bottom: 20px;">Welcome to Java Code Manager</h2>
-          <p style="color: #666; font-size: 16px; margin-bottom: 40px; line-height: 1.6;">
+          <h2 style="color: #00ff88; font-size: 32px; margin-bottom: 20px;">Welcome to Java Code Manager</h2>
+          <p style="color: #00ff88; font-size: 16px; margin-bottom: 40px; line-height: 1.6;">
             Explore a collection of carefully curated Java programs and code snippets. <br>
             Click below to view all available programs.
           </p>
@@ -302,7 +312,7 @@
     <!-- Page 2: Add Program -->
     <div id="add" class="page">
       <div class="content">
-        <h2 style="color: #333; margin-bottom: 25px;">Create New Program</h2>
+        <h2 style="color: #00ff88; margin-bottom: 25px;">Create New Program</h2>
         <div class="form-group">
           <label for="programName">Program Name:</label>
           <input type="text" id="programName" placeholder="e.g., HelloWorld, Calculator, BubbleSort">
