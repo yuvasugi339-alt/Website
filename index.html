@@ -366,6 +366,7 @@
           const codeFiles = files.filter(file => file.type === 'file');
           
           let loadedCount = 0;
+          const languagesSet = new Set();
           
           // Load each file
           codeFiles.forEach(file => {
@@ -374,14 +375,18 @@
               .then(code => {
                 const id = file.name.toLowerCase().replace(/\./g, '_');
                 const name = file.name;
+                const lang = getLanguageFromFilename(name);
+                languagesSet.add(lang);
                 programs[id] = {
                   name: name,
-                  code: code
+                  code: code,
+                  language: lang
                 };
                 
                 loadedCount++;
                 // Render when all programs are loaded
                 if (loadedCount === codeFiles.length) {
+                  populateLanguageFilter(Array.from(languagesSet).sort());
                   renderPrograms();
                 }
               });
@@ -396,6 +401,42 @@
           console.log('Error loading programs from GitHub:', error);
           renderPrograms();
         });
+    }
+
+    function getLanguageFromFilename(filename) {
+      const extMatch = filename.match(/\.([^.]+)$/);
+      if (!extMatch) return 'Unknown';
+      const ext = extMatch[1].toLowerCase();
+      switch (ext) {
+        case 'java': return 'Java';
+        case 'py': return 'Python';
+        case 'js': return 'JavaScript';
+        case 'ts': return 'TypeScript';
+        case 'cpp': case 'cc': case 'cxx': return 'C++';
+        case 'c': return 'C';
+        case 'cs': return 'C#';
+        case 'go': return 'Go';
+        case 'rb': return 'Ruby';
+        case 'php': return 'PHP';
+        case 'rs': return 'Rust';
+        default: return ext.toUpperCase();
+      }
+    }
+
+    function populateLanguageFilter(languages) {
+      const sel = document.getElementById('languageFilter');
+      // Clear existing (keep 'All')
+      sel.innerHTML = '<option value="All">All</option>';
+      languages.forEach(lang => {
+        const opt = document.createElement('option');
+        opt.value = lang;
+        opt.textContent = lang;
+        sel.appendChild(opt);
+      });
+
+      sel.addEventListener('change', () => {
+        renderPrograms();
+      });
     }
     
     function renderPrograms() {
