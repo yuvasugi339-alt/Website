@@ -448,14 +448,21 @@
         return;
       }
 
+      // Apply language filter
+      const selected = document.getElementById('languageFilter') ? document.getElementById('languageFilter').value : 'All';
+      const filtered = entries.filter(([id, prog]) => {
+        if (!prog.language) return selected === 'All';
+        return selected === 'All' || prog.language === selected;
+      });
+
       // Sort entries alphabetically by program name (case-insensitive)
-      entries.sort((a, b) => {
+      filtered.sort((a, b) => {
         const nameA = (a[1].name || '').toLowerCase();
         const nameB = (b[1].name || '').toLowerCase();
         return nameA.localeCompare(nameB);
       });
 
-      programsGrid.innerHTML = entries
+      programsGrid.innerHTML = filtered
         .map(([id, prog]) => `
           <button class="program-card" onclick="showCode('${id}')" title="${prog.name}">
             ${escapeHtml(prog.name)}
